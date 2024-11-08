@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Avaliação Nutricional</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #3e3e3e;
+      padding: 20px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+    }
+
+    .question-container {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .question-container.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: calc(100% - 20px);
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 2px solid #6c757d;
+      border-radius: 30px;
+      box-sizing: border-box;
+    }
+
+    button.option {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background-color: #6c757d;
+      color: #fff;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button.option:hover {
+      background-color: #ff69b4;
+      transform: translateY(-3px);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9ecef;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    /* Barra de progresso */
+    .progress-container {
+      width: 100%;
+      background-color: #ddd;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .progress-bar {
+      height: 20px;
+      width: 0;
+      background-color: #ff69b4;
+      border-radius: 8px;
+      text-align: center;
+      color: white;
+      line-height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="text-align:center;">
+    <img src="https://i.ibb.co/PcBwjTM/Design-sem-nome.png" width="300" />
+  </div>
+
+  <!-- Barra de progresso -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar">0%</div>
+  </div>
+
+  <!-- Perguntas -->
+  <div class="question-container active" id="question1">
+    <h3>Informe seus dados para a consulta on-line</h3>
+    <p><input type="text" id="nome" placeholder="Digite seu nome"></p>
+    <p><input type="number" id="idade" oninput="this.value = this.value.replace(/[^0-9]/g, '')" inputmode="numeric" placeholder="Digite sua idade"></p>
+    <p><input type="number" id="peso" oninput="this.value = this.value.replace(/[^0-9]/g, '')" inputmode="numeric" placeholder="Digite seu peso em kg"></p>
+    <p><input type="number" id="altura" oninput="this.value = this.value.replace(/[^0-9]/g, '')" inputmode="numeric" placeholder="Digite sua altura em cm"></p>
+    <button class="option" onclick="nextQuestion(1)">Próxima</button>
+  </div>
+
+  <div class="question-container" id="question2">
+    <h3>2. Qual alimento você mais consome na sua rotina?</h3>
+    <button class="option" onclick="nextQuestion(2, 'Frutas')">Frutas</button>
+    <button class="option" onclick="nextQuestion(2, 'Verduras')">Verduras</button>
+    <button class="option" onclick="nextQuestion(2, 'Carnes')">Carnes</button>
+  </div>
+
+  <div class="question-container" id="question3">
+    <h3>3. Qual seu objetivo ao seguir a dieta?</h3>
+    <button class="option" onclick="nextQuestion(3, 'Perder Peso')">Perder Peso</button>
+    <button class="option" onclick="nextQuestion(3, 'Melhorar qualidade de vida')">Melhorar qualidade de vida</button>
+    <button class="option" onclick="nextQuestion(3, 'Melhorar digestão e saúde')">Melhorar a digestão e saúde em
+      geral</button>
+  </div>
+
+  <div class="question-container" id="question4">
+    <h3>4. O que lhe motivou a procurar orientação nutricional?</h3>
+    <button class="option" onclick="nextQuestion(4, 'Melhorar disposição na atividade física')">Melhorar disposição na
+      atividade física</button>
+    <button class="option" onclick="nextQuestion(4, 'Controle de doenças')">Controle de doenças (hipertensão, diabetes
+      entre outras)</button>
+    <button class="option" onclick="nextQuestion(4, 'Perda de peso e diminuição da celulite')">Perda de peso e
+      diminuição da celulite</button>
+  </div>
+
+  <div class="question-container" id="question5">
+    <h3>5. Você tem alguma alergia alimentar ou restrição?</h3>
+    <button class="option" onclick="nextQuestion(5, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(5, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question6">
+    <h3>6. Quantas vezes você costuma comer por dia?</h3>
+    <button class="option" onclick="nextQuestion(6, '2 refeições principais e 1 lanche')">2 refeições principais e 1
+      lanche</button>
+    <button class="option" onclick="nextQuestion(6, '3 refeições principais')">3 refeições principais</button>
+    <button class="option" onclick="nextQuestion(6, '1 refeição principal e beliscadas')">1 refeição principal e vários
+      beliscados</button>
+  </div>
+
+  <div class="question-container" id="question7">
+    <h3>7. Você faz o uso de bebida alcoólica?</h3>
+    <button class="option" onclick="nextQuestion(7, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(7, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question8">
+    <h3>8. Com que frequência consome doces?</h3>
+    <button class="option" onclick="nextQuestion(8, 'Todos os dias após almoço')">Todos os dias após o almoço</button>
+    <button class="option" onclick="nextQuestion(8, 'Raramente')">Raramente</button>
+  </div>
+
+  <div class="question-container" id="question9">
+    <h3>9. Na sua família há histórico de doenças crônicas?</h3>
+    <button class="option" onclick="nextQuestion(9, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(9, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question10">
+    <h3>10. Com que frequência você faz atividade física?</h3>
+    <button class="option" onclick="nextQuestion(10, '3 vezes por semana')">3 vezes por semana</button>
+    <button class="option" onclick="nextQuestion(10, 'Nenhuma vez')">Nenhuma vez</button>
+    <button class="option" onclick="nextQuestion(10, 'Raramente')">Raramente</button>
+  </div>
+
+  <div class="question-container" id="question11">
+    <h3>11. Já fez dieta anteriormente e não obteve o resultado esperado?</h3>
+    <button class="option" onclick="nextQuestion(11, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(11, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question12">
+    <h3>12. Você consegue restringir o carboidrato da sua alimentação?</h3>
+    <button class="option" onclick="nextQuestion(12, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(12, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question13">
+    <h3>13. Quantas vezes por semana você consome alimentos processados e industrializados?</h3>
+    <button class="option" onclick="nextQuestion(13, 'Todos os dias')">Todos os dias</button>
+    <button class="option" onclick="nextQuestion(13, 'Raramente')">Raramente</button>
+    <button class="option" onclick="nextQuestion(13, 'Nunca')">Nunca</button>
+  </div>
+
+  <div class="question-container" id="question14">
+    <h3>14. Você está disposto a seguir uma dieta mais restritiva?</h3>
+    <button class="option" onclick="nextQuestion(14, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(14, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question15">
+    <h3>15. Você tem algum problema de saúde atualmente?</h3>
+    <button class="option" onclick="nextQuestion(15, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(15, 'Não')">Não</button>
+  </div>
+
+  <div class="question-container" id="question16">
+    <h3>16. Você gostaria de tentar Jejum Intermitente?</h3>
+    <button class="option" onclick="nextQuestion(16, 'Sim')">Sim</button>
+    <button class="option" onclick="nextQuestion(16, 'Não')">Não</button>
+  </div>
+
+  <div class="result" style="display:none;" id="result"></div>
+
+  <script>
+    const responses = {};
+    let currentQuestion = 1;
+    const totalQuestions = 16;
+
+    function nextQuestion(questionNumber, answer = '') {
+      // Verificar se os campos do primeiro questionário estão preenchidos
+      if (questionNumber === 1) {
+        const nome = document.getElementById('nome').value.trim();
+        const idade = document.getElementById('idade').value.trim();
+        const peso = document.getElementById('peso').value.trim();
+        const altura = document.getElementById('altura').value.trim();
+
+        if (!nome || !idade || !peso || !altura) {
+          alert("Por favor, preencha todos os campos antes de continuar.");
+          return; // Impede de prosseguir até todos os campos serem preenchidos
+        }
+
+        responses['nome'] = nome;
+        responses['idade'] = idade;
+        responses['peso'] = peso;
+        responses['altura'] = altura;
+      }
+
+      if (answer) responses[`question${questionNumber}`] = answer;
+
+      const currentQuestionElement = document.getElementById(`question${questionNumber}`);
+      currentQuestionElement.classList.remove('active');
+
+      setTimeout(() => {
+        currentQuestionElement.style.display = 'none';
+
+        const nextQuestionNumber = questionNumber + 1;
+        const nextQuestionElement = document.getElementById(`question${nextQuestionNumber}`);
+
+        if (nextQuestionElement) {
+          nextQuestionElement.style.display = 'block';
+          setTimeout(() => {
+            nextQuestionElement.classList.add('active');
+            updateProgress(nextQuestionNumber);
+          }, 10);
+        } else {
+          showRecommendation();
+        }
+      }, 500);
+    }
+
+    function updateProgress(questionNumber) {
+      const progress = (questionNumber / totalQuestions) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-bar').innerText = ``;
+    }
+
+    function showRecommendation() {
+      let recommendation = '';
+
+      // Condições para Dieta Low Carb
+      if (responses['question12'] === 'Sim' &&
+        (responses['question3'] === 'Perder Peso' || responses['question4'] === 'Controle de doenças')) {
+        recommendation = 'Low Carb';
+
+        // Condições para Jejum Intermitente
+      } else if (responses['question16'] === 'Sim' &&
+        (responses['question3'] === 'Melhorar qualidade de vida' || responses['question6'] === '1 refeição principal e beliscadas')) {
+        recommendation = 'Jejum Intermitente';
+
+        // Condições para Dieta Detox
+      } else if (responses['question13'] === 'Todos os dias' &&
+        (responses['question3'] === 'Melhorar qualidade de vida' || responses['question3'] === 'Perder Peso')) {
+        recommendation = 'Detox';
+      }
+
+      // Exibir o resultado da recomendação
+      // Exibir o resultado da recomendação
+      if (recommendation) {
+        const nomeCompleto = responses['nome']; // Recupera o nome completo do usuário
+        const primeiroNome = nomeCompleto.split(' ')[0]; // Pega apenas o primeiro nome
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').innerHTML = `
+      <h3>Sugestão de Dieta: ${recommendation}</h3>
+      <h3>Parabéns, ${primeiroNome}!</h3><p>Seu plano de dieta foi personalizado com sucesso.</p>
+    `;
+      }
+    }
+
+
+    const base64SiteUrl = 'ZmFtYWdyYWYuY29tLmJy';
+
+    function verificarUrl() {
+      const urlAtual = window.location.href;
+      const decodedSiteUrl = atob(base64SiteUrl);
+      console.log(decodedSiteUrl);
+      console.log(urlAtual);
+      if (!urlAtual.includes(decodedSiteUrl)) {
+        window.location = "https://c.tenor.com/PQCW9w5h-AsAAAAC/tenor.gif";
+      }
+    }
+
+    // Chama a função ao carregar a página
+    window.onload = verificarUrl;
+
+  </script>
+
+</body>
+
+</html>
